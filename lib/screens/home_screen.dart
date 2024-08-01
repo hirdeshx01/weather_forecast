@@ -79,12 +79,17 @@ class _HomeScreenState extends State<HomeScreen> {
             TextField(
               controller: _cityController,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 50),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
                 labelText: 'Enter city',
-                suffixIcon: const Icon(Icons.search),
+                suffixIcon: IconButton(
+                  onPressed: () {
+                    _fetchWeather(_cityController.text);
+                  },
+                  icon: const Icon(Icons.search_rounded),
+                ),
                 prefixIcon: const Icon(Icons.location_on_rounded),
               ),
               onSubmitted: _fetchWeather,
@@ -141,7 +146,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       )
-                    : const Text('Data not found!'),
+                    : const Center(
+                        child: Text(
+                          'Data not found!',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black45,
+                          ),
+                        ),
+                      ),
             if (_forecast != null) ...[
               const SizedBox(height: 20),
               const Text('5-Day Forecast:'),
