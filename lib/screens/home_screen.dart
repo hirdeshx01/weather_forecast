@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _cityController = TextEditingController();
   Weather? _currentWeather;
   List<Weather>? _forecast;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -32,15 +33,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _fetchWeather(String city) async {
-    final weatherService = WeatherService();
-    final currentWeather = await weatherService.fetchCurrentWeather(city);
-    final forecast = await weatherService.fetchWeatherForecast(city);
     setState(() {
-      _currentWeather = currentWeather;
-      _forecast = forecast;
+      _isLoading = true;
     });
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('lastCity', city);
+    final weatherService = WeatherService();
+
+    try {
+      final currentWeather = await weatherService.fetchCurrentWeather(city);
+      final forecast = await weatherService.fetchWeatherForecast(city);
+      setState(() {
+        _currentWeather = currentWeather;
+        _forecast = forecast;
+      });
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setString('lastCity', city);
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Unable to fetch data. Please make sure you have an active internet connection and entered a valid city.'),
+            duration: Duration(seconds: 6),
+          ),
+        );
+      }
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
