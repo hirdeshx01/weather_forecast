@@ -67,9 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final currTemp = _currentWeather!.temperature;
-    final description = _currentWeather!.description;
-
     return Scaffold(
       appBar: AppBar(
         elevation: 4,
@@ -93,52 +90,58 @@ class _HomeScreenState extends State<HomeScreen> {
               onSubmitted: _fetchWeather,
             ),
             const SizedBox(height: 20),
-            if (_currentWeather != null)
-              Column(
-                children: [
-                  Text(
-                    _currentWeather!.city,
-                    style: const TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const Text(
-                    'Today',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black38,
-                    ),
-                  ),
-                  Text(
-                    '${_currentWeather!.temperature}°C',
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                      color: currTemp <= 0
-                          ? Colors.blue
-                          : currTemp > 0 && currTemp <= 15
-                              ? Colors.indigo
-                              : currTemp > 15 && currTemp < 30
-                                  ? Colors.deepPurple
-                                  : Colors.pink,
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 100),
-                    child: Divider(),
-                  ),
-                  Text(
-                    description[0].toUpperCase() + description.substring(1),
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black38,
-                    ),
-                  ),
-                ],
-              ),
+            _isLoading
+                ? const CircularProgressIndicator()
+                : _currentWeather != null
+                    ? Column(
+                        children: [
+                          Text(
+                            _currentWeather!.city,
+                            style: const TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Text(
+                            'Today',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38,
+                            ),
+                          ),
+                          Text(
+                            '${_currentWeather!.temperature}°C',
+                            style: TextStyle(
+                              fontSize: 48,
+                              fontWeight: FontWeight.bold,
+                              color: _currentWeather!.temperature <= 0
+                                  ? Colors.blue
+                                  : _currentWeather!.temperature > 0 &&
+                                          _currentWeather!.temperature <= 15
+                                      ? Colors.indigo
+                                      : _currentWeather!.temperature > 15 &&
+                                              _currentWeather!.temperature < 30
+                                          ? Colors.deepPurple
+                                          : Colors.pink,
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 120),
+                            child: Divider(),
+                          ),
+                          Text(
+                            _currentWeather!.description[0].toUpperCase() +
+                                _currentWeather!.description.substring(1),
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black38,
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Text('Data not found!'),
             if (_forecast != null) ...[
               const SizedBox(height: 20),
               const Text('5-Day Forecast:'),
