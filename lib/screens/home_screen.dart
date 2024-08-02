@@ -61,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-                'Unable to fetch data. Please make sure you have an active internet connection and entered a valid city.'),
+              'We are unable to retrieve the data at the moment.',
+              textAlign: TextAlign.center,
+            ),
             duration: Duration(seconds: 6),
           ),
         );
