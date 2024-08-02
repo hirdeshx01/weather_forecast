@@ -165,82 +165,96 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
             const SizedBox(height: 20),
-            if (_forecast != null)
-              Expanded(
-                child: Card(
-                  color: Theme.of(context).colorScheme.secondaryContainer,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 20),
-                      const Text(
-                        '5-Day Forecast:',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: _forecast!.length,
-                          itemBuilder: (context, index) {
-                            final weather = _forecast![index];
-                            final iconUrl =
-                                'http://openweathermap.org/img/wn/${weather.icon}@2x.png';
-
-                            return Column(
-                              children: [
-                                ListTile(
-                                  title: Row(
-                                    children: [
-                                      Text(
-                                        '${_getDayOfWeek(weather.date)}:  ',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      Text(
-                                        weather.description,
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  subtitle: Text(
-                                    '${weather.temperature}°C',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                      color: weather.temperature <= 0
-                                          ? Colors.blue
-                                          : weather.temperature > 0 &&
-                                                  weather.temperature <= 15
-                                              ? Colors.indigo
-                                              : weather.temperature > 15 &&
-                                                      weather.temperature < 30
-                                                  ? Colors.deepPurple
-                                                  : Colors.pink,
-                                    ),
-                                  ),
-                                  leading: Image.network(
-                                    iconUrl,
-                                  ),
+            _isLoading
+                ? const SizedBox()
+                : _forecast != null
+                    ? Expanded(
+                        child: Card(
+                          color:
+                              Theme.of(context).colorScheme.secondaryContainer,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              const Text(
+                                '5-Day Forecast:',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                const Divider(),
-                              ],
-                            );
-                          },
+                              ),
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: _forecast!.length,
+                                  itemBuilder: (context, index) {
+                                    final weather = _forecast![index];
+                                    final iconUrl =
+                                        'http://openweathermap.org/img/wn/${weather.icon}@2x.png';
+
+                                    return Column(
+                                      children: [
+                                        ListTile(
+                                          title: Row(
+                                            children: [
+                                              Text(
+                                                '${_getDayOfWeek(weather.date)}:  ',
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                              Text(
+                                                weather.description,
+                                                style: const TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black45,
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          subtitle: Text(
+                                            '${weather.temperature}°C',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                              color: weather.temperature <= 0
+                                                  ? Colors.blue
+                                                  : weather.temperature > 0 &&
+                                                          weather.temperature <=
+                                                              15
+                                                      ? Colors.indigo
+                                                      : weather.temperature >
+                                                                  15 &&
+                                                              weather.temperature <
+                                                                  30
+                                                          ? Colors.deepPurple
+                                                          : Colors.pink,
+                                            ),
+                                          ),
+                                          leading: Image.network(
+                                            iconUrl,
+                                          ),
+                                        ),
+                                        const Divider(),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+                      )
+                    : const SizedBox()
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _cityController.dispose();
+    super.dispose();
   }
 }
