@@ -28,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String _getDayOfWeek(String date) {
     final DateTime dateTime = DateTime.parse(date);
     final DateFormat formatter = DateFormat('EEEE');
-    return formatter.format(dateTime);
+    final String dayOfWeek = formatter.format(dateTime);
+    return dayOfWeek.substring(0, 3);
   }
 
   Future<void> _loadLastCity() async {
@@ -167,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (_forecast != null)
               Expanded(
                 child: Card(
-                  surfaceTintColor: Colors.grey,
+                  color: Theme.of(context).colorScheme.secondaryContainer,
                   child: Column(
                     children: [
                       const SizedBox(height: 20),
@@ -189,11 +190,43 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Column(
                               children: [
                                 ListTile(
-                                  title: Text(
-                                      '${_getDayOfWeek(weather.date)}: ${weather.description}'),
-                                  subtitle:
-                                      Text('Temp: ${weather.temperature}°C'),
-                                  leading: Image.network(iconUrl),
+                                  title: Row(
+                                    children: [
+                                      Text(
+                                        '${_getDayOfWeek(weather.date)}:  ',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        weather.description,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  subtitle: Text(
+                                    '${weather.temperature}°C',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                      color: weather.temperature <= 0
+                                          ? Colors.blue
+                                          : weather.temperature > 0 &&
+                                                  weather.temperature <= 15
+                                              ? Colors.indigo
+                                              : weather.temperature > 15 &&
+                                                      weather.temperature < 30
+                                                  ? Colors.deepPurple
+                                                  : Colors.pink,
+                                    ),
+                                  ),
+                                  leading: Image.network(
+                                    iconUrl,
+                                  ),
                                 ),
                                 const Divider(),
                               ],
