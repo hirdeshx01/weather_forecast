@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_forecast/services/weather_service.dart';
 import 'package:weather_forecast/models/weather.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,6 +23,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadLastCity();
+  }
+
+  String _getDayOfWeek(String date) {
+    final DateTime dateTime = DateTime.parse(date);
+    final DateFormat formatter = DateFormat('EEEE');
+    return formatter.format(dateTime);
   }
 
   Future<void> _loadLastCity() async {
@@ -73,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('Weather Forecast'),
       ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             TextField(
@@ -152,26 +159,52 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black45,
+                            color: Colors.black38,
                           ),
                         ),
                       ),
-            if (_forecast != null) ...[
-              const SizedBox(height: 20),
-              const Text('5-Day Forecast:'),
+            const SizedBox(height: 20),
+            if (_forecast != null)
               Expanded(
-                child: ListView.builder(
-                  itemCount: _forecast!.length,
-                  itemBuilder: (context, index) {
-                    final weather = _forecast![index];
-                    return ListTile(
-                      title: Text('${weather.date}: ${weather.description}'),
-                      subtitle: Text('Temp: ${weather.temperature}°C'),
-                    );
-                  },
+                child: Card(
+                  surfaceTintColor: Colors.grey,
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      const Text(
+                        '5-Day Forecast:',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: _forecast!.length,
+                          itemBuilder: (context, index) {
+                            final weather = _forecast![index];
+                            final iconUrl =
+                                'http://openweathermap.org/img/wn/${weather.icon}@2x.png';
+
+                            return Column(
+                              children: [
+                                ListTile(
+                                  title: Text(
+                                      '${_getDayOfWeek(weather.date)}: ${weather.description}'),
+                                  subtitle:
+                                      Text('Temp: ${weather.temperature}°C'),
+                                  leading: Image.network(iconUrl),
+                                ),
+                                const Divider(),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              )
           ],
         ),
       ),

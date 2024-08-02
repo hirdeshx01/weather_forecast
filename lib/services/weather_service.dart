@@ -22,7 +22,13 @@ class WeatherService {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final List<dynamic> list = data['list'];
-      return list.map((json) => Weather.fromJson(json)).toList();
+      final forecastList = list.take(40).toList();
+      List<Weather> weatherList = [];
+      for (var i = 0; i < forecastList.length; i += 8) {
+        final json = forecastList[i];
+        weatherList.add(Weather.fromJson(json));
+      }
+      return weatherList;
     } else {
       throw Exception('Failed to load weather forecast');
     }
