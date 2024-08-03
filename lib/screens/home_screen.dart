@@ -77,6 +77,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Color temperatureColor(double temp) {
+      return temp <= 0
+          ? Colors.blue
+          : temp > 0 && temp <= 15
+              ? Colors.indigo
+              : temp > 15 && temp < 30
+                  ? Colors.deepPurple
+                  : Colors.pink;
+    }
+
     return Scaffold(
       appBar: AppBar(
         elevation: 4,
@@ -106,40 +116,31 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 20),
             _isLoading
-                ? const CircularProgressIndicator()
+                ? const Expanded(
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  )
                 : _currentWeather != null
                     ? Column(
                         children: [
                           Text(
                             _currentWeather!.city,
-                            style: const TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.displayMedium,
                           ),
-                          const Text(
+                          Text(
                             'Today',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black38,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                           Text(
                             '${_currentWeather!.temperature}°C',
-                            style: TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                              color: _currentWeather!.temperature <= 0
-                                  ? Colors.blue
-                                  : _currentWeather!.temperature > 0 &&
-                                          _currentWeather!.temperature <= 15
-                                      ? Colors.indigo
-                                      : _currentWeather!.temperature > 15 &&
-                                              _currentWeather!.temperature < 30
-                                          ? Colors.deepPurple
-                                          : Colors.pink,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium!
+                                .copyWith(
+                                  color: temperatureColor(
+                                      _currentWeather!.temperature),
+                                ),
                           ),
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 120),
@@ -148,20 +149,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             _currentWeather!.description[0].toUpperCase() +
                                 _currentWeather!.description.substring(1),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black38,
-                            ),
+                            style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         ],
                       )
-                    : const Center(
-                        child: Text(
-                          'Enter a city!',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black38,
+                    : Expanded(
+                        child: Center(
+                          child: Text(
+                            'Uh oh, something unexpected occurred!',
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),
                       ),
@@ -176,12 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: [
                               const SizedBox(height: 20),
-                              const Text(
+                              Text(
                                 '5-Day Forecast:',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge,
                               ),
                               Expanded(
                                 child: ListView.builder(
@@ -198,39 +191,28 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               Text(
                                                 '${_getDayOfWeek(weather.date)}:  ',
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge,
                                               ),
                                               Text(
                                                 weather.description,
-                                                style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black45,
-                                                ),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyLarge,
                                               )
                                             ],
                                           ),
                                           subtitle: Text(
                                             '${weather.temperature}°C',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 18,
-                                              color: weather.temperature <= 0
-                                                  ? Colors.blue
-                                                  : weather.temperature > 0 &&
-                                                          weather.temperature <=
-                                                              15
-                                                      ? Colors.indigo
-                                                      : weather.temperature >
-                                                                  15 &&
-                                                              weather.temperature <
-                                                                  30
-                                                          ? Colors.deepPurple
-                                                          : Colors.pink,
-                                            ),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleLarge!
+                                                .copyWith(
+                                                  color: temperatureColor(
+                                                    weather.temperature,
+                                                  ),
+                                                ),
                                           ),
                                           leading: Image.network(
                                             iconUrl,
