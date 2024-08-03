@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text(
-              'We are unable to retrieve the data at the moment.',
+              'We are unable to retrieve the data at the moment. Please check your internet connection and verify that the city name entered is correct.',
               textAlign: TextAlign.center,
             ),
             duration: Duration(seconds: 6),
@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             TextField(
               controller: _cityController,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(horizontal: 50),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 48),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
@@ -158,10 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     : const Center(
                         child: Text(
-                          'Data not found!',
+                          'Enter a city!',
                           style: TextStyle(
                             fontSize: 18,
-                            fontWeight: FontWeight.bold,
                             color: Colors.black38,
                           ),
                         ),
