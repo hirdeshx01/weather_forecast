@@ -16,14 +16,14 @@ Here are some screenshots of the application:
 
 ### Home Screen
 <div style="display: flex; gap: 20px;">
-    <img src="assets/screenshots/home_light.png" alt="Home Screen Light" width="300">
-    <img src="assets/screenshots/home_dark.png" alt="Home Screen Dark" width="300">
+    <img src="assets/screenshots/home_light.png" alt="Home Screen Light" width="250">
+    <img src="assets/screenshots/home_dark.png" alt="Home Screen Dark" width="250">
 </div>
 
 ### Search
 <div style="display: flex; gap: 20px;">
-    <img src="assets/screenshots/search_light.png" alt="Search Light" width="300">
-    <img src="assets/screenshots/search_dark.png" alt="Search Dark" width="300">
+    <img src="assets/screenshots/search_light.png" alt="Search Light" width="250">
+    <img src="assets/screenshots/search_dark.png" alt="Search Dark" width="250">
 </div>
 
 ## Getting Started
