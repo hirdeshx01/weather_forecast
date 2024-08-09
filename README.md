@@ -2,6 +2,14 @@
 
 `weather_forecast` is a Flutter application designed to provide weather forecasts using various APIs and libraries. This project leverages Flutter's capabilities to create a cross-platform mobile application.
 
+## Features
+
+- Fetches weather data from online APIs.
+- Displays weather forecasts in a user-friendly interface.
+- Supports multiple languages using the `intl` package.
+- Stores user preferences using `shared_preferences`.
+- Custom fonts using `google_fonts`.
+
 ## Screenshots
 
 Here are some screenshots of the application:
@@ -17,14 +25,6 @@ Here are some screenshots of the application:
     <img src="assets/screenshots/search_light.png" alt="Search Light" width="300">
     <img src="assets/screenshots/search_dark.png" alt="Search Dark" width="300">
 </div>
-
-## Features
-
-- Fetches weather data from online APIs.
-- Displays weather forecasts in a user-friendly interface.
-- Supports multiple languages using the `intl` package.
-- Stores user preferences using `shared_preferences`.
-- Custom fonts using `google_fonts`.
 
 ## Getting Started
 
