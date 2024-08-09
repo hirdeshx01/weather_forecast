@@ -2,6 +2,22 @@
 
 `weather_forecast` is a Flutter application designed to provide weather forecasts using various APIs and libraries. This project leverages Flutter's capabilities to create a cross-platform mobile application.
 
+## Screenshots
+
+Here are some screenshots of the application:
+
+### Home Screen
+<div style="display: flex; gap: 20px;">
+    <img src="assets/screenshots/home_light.png" alt="Home Screen Light" width="300">
+    <img src="assets/screenshots/home_dark.png" alt="Home Screen Dark" width="300">
+</div>
+
+### Search
+<div style="display: flex; gap: 20px;">
+    <img src="assets/screenshots/search_light.png" alt="Search Light" width="300">
+    <img src="assets/screenshots/search_dark.png" alt="Search Dark" width="300">
+</div>
+
 ## Features
 
 - Fetches weather data from online APIs.
@@ -57,18 +73,3 @@ To run the tests, use the following command:
 ```sh
 flutter test
 ```
-## Screenshots
-
-Here are some screenshots of the application:
-
-### Home Screen
-<div style="display: flex; gap: 20px;">
-    <img src="assets/screenshots/home_light.png" alt="Home Screen Light" width="300">
-    <img src="assets/screenshots/home_dark.png" alt="Home Screen Dark" width="300">
-</div>
-
-### Search
-<div style="display: flex; gap: 20px;">
-    <img src="assets/screenshots/search_light.png" alt="Search Light" width="300">
-    <img src="assets/screenshots/search_dark.png" alt="Search Dark" width="300">
-</div>
