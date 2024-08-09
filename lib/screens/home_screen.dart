@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(horizontal: 48),
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(28),
                 ),
                 labelText: 'Enter city',
                 suffixIcon: IconButton(
